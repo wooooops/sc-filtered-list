@@ -1,0 +1,1 @@
+.hide{display:none}html body button[data-sc-filtered-list]+.sc-filtered-list-list{display:none;background-color:grey}html body button[data-sc-filtered-list]+.sc-filtered-list-list.sc-filtered-list-visible{display:block}.sc-filtered-list.sc-filtered-list-list>.sc-filtered-list-list-item-wrapper>.sc-filtered-list-list-item.sc-filtered-list-list-item-active{background-color:#aaa}

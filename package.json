@@ -1,0 +1,35 @@
+{
+  "name": "sc-filtered-list",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha",
+    "posttest": "mocha test/readme.js -R markdown > README.md"
+  },
+  "author": "David Tsuji",
+  "license": "MIT",
+  "devDependencies": {
+    "should": "~2.1.1",
+    "gulp": "^3.6.0",
+    "gulp-shell": "^0.2.4",
+    "gulp-browserify": "^0.5.0",
+    "bower": "^1.3.1",
+    "gulp-less": "^1.2.3",
+    "gulp-rename": "^1.2.0",
+    "gulp-uglify": "^0.2.1",
+    "gulp-minify-css": "^0.3.0",
+    "gulp-jshint": "^1.5.3",
+    "jshint-stylish": "^0.1.5"
+  },
+  "dependencies": {
+    "sc-is": "0.0.3",
+    "sc-haskey": "0.0.2",
+    "sc-md5": "0.0.1",
+    "emitter-component": "^1.1.1",
+    "sc-cast": "0.0.6",
+    "sg-observable-array": "0.0.2",
+    "object-hash": "^0.2.3",
+    "fuzzaldrin": "^1.0.0"
+  }
+}
