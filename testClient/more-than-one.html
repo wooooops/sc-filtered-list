@@ -1,0 +1,43 @@
+ <!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+
+	<!-- Test dependencies -->
+	<script src="../bower_components/jquery/dist/jquery.js"></script>
+	<script src="../bower_components/underscore/underscore.js"></script>
+	<script src="../bower_components/async/lib/async.js"></script>
+	<link rel="stylesheet" href="../node_modules/mocha/mocha.css">
+	<script src="../node_modules/mocha/mocha.js"></script>
+	<script src="../node_modules/should/should.js"></script>
+
+	<!-- scfilteredlist dependencies -->
+	<link rel="stylesheet" href="../dist/scfilteredlist.css">
+	<script src="../dist/scfilteredlist.js"></script>
+
+</head>
+<body>
+
+	<div id="mocha"></div>
+
+	<section class="test">
+		
+		<button class="filter1" data-sc-filtered-list data-sc-filtered-list-options='{"defaultButtonLabel": "one"}'>1</button>
+		<button class="filter2" data-sc-filtered-list data-sc-filtered-list-options='{"defaultButtonLabel": "two", "sortControlVisible": false}'>2</button>
+		<button class="filter3" data-sc-filtered-list data-sc-filtered-list-options='{"defaultButtonLabel": "three"}'>3</button>
+
+	</section>
+
+	<script>
+		mocha.ui('bdd');
+		mocha.reporter('html');
+	</script>
+	<script src="standard-tests.js"></script>
+	<script src="more-than-one.js"></script>
+	<script>
+		if (window.mochaPhantomJS) { mochaPhantomJS.run(); }
+		else { mocha.run(); }
+	</script>
+</body>
+</html>

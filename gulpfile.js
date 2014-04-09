@@ -19,7 +19,7 @@ var livereload = function ( _file ) {
 }
 
 gulp.task( "jshint", function () {
-  return gulp.src( [ "./src/scripts/**/*.js", "test/**/*.js" ] )
+  return gulp.src( [ "./src/scripts/**/*.js", "test/**/*.js", "testClient/**/*.js" ] )
     .pipe( jshint() )
     .pipe( jshint.reporter( jshintReporter ) );
 } );
@@ -43,7 +43,8 @@ gulp.task( "minifyStyles", [ "stylesMain" ], function () {
 gulp.task( "scriptMain", [ "jshint" ], function () {
   return gulp.src( [ "./src/scripts/index.js" ] )
     .pipe( browserify( {
-      standalone: moduleName
+      standalone: moduleName,
+      debug: true
     } ) )
     .pipe( rename( moduleName + ".js" ) )
     .pipe( gulp.dest( "./dist/" ) )
@@ -61,7 +62,10 @@ gulp.task( "stylesMain", function () {
 gulp.task( "test", function () {
   return gulp.src( "" ).pipe( shell( [
     "npm test"
-  ] ) );
+  ], {
+    ignoreErrors: true
+  } ) )
+    .on( "end", livereload( ".js" ) );
 } );
 
 gulp.task( "watch", function () {
@@ -70,6 +74,7 @@ gulp.task( "watch", function () {
   gulp.watch( [ "./src/scripts/**/*.js*" ], [ "scripts", "minifyScripts" ] );
   gulp.watch( [ "./src/styles/**/*.less" ], [ "styles" ] );
   gulp.watch( [ "./demo/*" ], [ "default" ] );
+  gulp.watch( [ "./test/**/*", "./testClient/**/*" ], [ "test" ] );
   gulp.watch( [ "*.js*" ], [ "default" ] );
 } );
 

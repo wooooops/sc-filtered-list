@@ -5,7 +5,7 @@
 	<title>Document</title>
 
 	<!-- Dependencies -->
-	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css">
 	<script src="../bower_components/jquery/dist/jquery.min.js"></script>
 	<script src="../bower_components/underscore/underscore.js"></script>
 
@@ -26,8 +26,11 @@
 			
 			<button
 				data-sc-filtered-list=""
-				data-sc-filtered-list-name="a thing"
-				data-sc-filtered-list-options='{"three": 3}'
+				data-sc-filtered-list-options='{
+					"defaultButtonLabel": "choose",
+					"maxNumItemsVisible": 10,
+					"maxNumItems": 100
+				}'
 			></button>
 
 		</section>

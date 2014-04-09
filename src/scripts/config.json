@@ -4,17 +4,17 @@
   "defaults": {
     "maxNumItemsVisible": 7,
     "maxNumItems": 10,
-    "throttleFetch": 500,
     "sortControlVisible": true,
-    "dataSource": [],
+    "itemLabelKey": "name",
     "defaultButtonLabel": "Choose one",
     "defalutListTitle": "Select an item"
   },
   "templates": {
-    "listWrapper": "<div class='<%= config.className %> <%= config.className %>-list'><%= config.templates.listInput %><%= config.templates.listHeader %><%= config.templates.listItemWrapper %></div>",
-    "listInput": "<div class='<%= config.className %>-list-input'><input type='text'></div>",
-    "listHeader": "<header class='<%= config.className %>-list-header'><%= config.defaults.defalutListTitle %></header>",
-    "listItemWrapper": "<ul class='<%= config.className %>-list-item-wrapper'></ul>",
-    "listItem": "<li class='<%= config.className %>-list-item' data-cid='<%= cid %>'><%= name %></li>"
+    "listWrapper": "<div class='<%= config.className %>-container'><%= config.templates.listInput %><%= config.templates.listHeader %><%= config.templates.listItemWrapper %></div>",
+    "listInput": "<div class='<%= config.className %>-input-container'><input type='text' class='<%= config.className %>-input'><%= config.templates.listSortToggle %></div>",
+    "listHeader": "<header class='<%= config.className %>-header'><%= config.defaults.defalutListTitle %></header>",
+    "listItemWrapper": "<ul class='<%= config.className %>-items'></ul>",
+    "listItem": "<li class='<%= config.className %>-item' data-cid='<%= cid %>'><%= key %></li>",
+    "listSortToggle": "<button type='button' class='<%= config.className %>-sort-toggle'></button>"
   }
 }

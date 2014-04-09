@@ -1,29 +1,49 @@
 var cast = require( "sc-cast" ),
-  config = require( "./config.json" ),
   hasKey = require( "sc-haskey" ),
   ItemValue = require( "./item-value" ),
+  sortToggleOptions = [ "", "desc", "asc" ],
   md5 = require( "sc-md5" );
 
 exports.activeItemGet = function () {
   var filter = this;
+
+  if ( filter.__destroyed ) {
+    return;
+  }
+
   return filter.list.getActiveItem();
 };
 
 exports.activeItemSet = function ( _value ) {
   var filter = this;
-  filter.$el.html( _value.name );
+
+  if ( filter.__destroyed ) {
+    return;
+  }
+
+  filter.value = _value;
   filter.emit( "change", _value );
 };
 
 exports.activeItemIndexGet = function () {
   var list = this;
+
+  if ( list.filter.__destroyed ) {
+    return;
+  }
+
   return list.__activeItemIndex;
 };
 
 exports.activeItemIndexSet = function ( _value ) {
-  var list = this,
-    index = cast( _value, "number", 0 ),
-    itemActiveClassName = config.className + "-list-item-active",
+  var list = this;
+
+  if ( list.filter.__destroyed ) {
+    return;
+  }
+
+  var index = cast( _value, "number", 0 ),
+    itemActiveClassName = list.filter.__config.className + "-item-active",
     $itemChildren = list.$list.children(),
     $firstItem = $( $itemChildren[ 0 ] ),
     $activeItemIndexByClass = list.$list.find( "." + itemActiveClassName ),
@@ -32,18 +52,26 @@ exports.activeItemIndexSet = function ( _value ) {
 
   $activeItemIndexByClass.removeClass( itemActiveClassName );
   $activeItemIndex.addClass( itemActiveClassName );
-
   list.__activeItemIndex = $itemChildren.index( $activeItemIndex );
+
+  if ( list.__visible ) {
+    list.filter.emit( "itemFocus" );
+  }
 };
 
 exports.bodyClick = function ( _event ) {
-  var filter = this,
-    clickedElement = $( hasKey( _event, "toElement" ) ? _event.toElement : null ),
-    $clickedElement = clickedElement.length > 0 ? clickedElement : null,
-    clickedButton = $clickedElement.closest( "." + config.className + "-button" ).length > 0,
-    clickedList = $clickedElement.closest( "." + config.className + "-list" ).length > 0,
-    args = Array.prototype.slice.call( arguments );
+  var filter = this;
 
+  if ( filter.__destroyed ) {
+    return;
+  }
+
+  var buttonClass = "." + filter.__config.className + "-button",
+    containerClass = "." + filter.__config.className + "-container",
+    $clickedElement = $( hasKey( _event, "target" ) ? _event.target : null ),
+    $thisParent = $clickedElement.closest( "[data-" + filter.__config.className + "-cid=" + filter.__cid + "]" ),
+    clickedButton = $thisParent.length > 0 && ( $clickedElement.is( buttonClass ) || $clickedElement.closest( buttonClass ).length ) ? true : false,
+    clickedList = $thisParent.length > 0 && ( $clickedElement.is( containerClass ) || $clickedElement.closest( containerClass ).length ) ? true : false;
 
   if ( clickedButton && !filter.listVisible ) {
     filter.listVisible = true;
@@ -53,8 +81,13 @@ exports.bodyClick = function ( _event ) {
 };
 
 exports.filterChanged = function ( _event ) {
-  var list = this,
-    keyCode = hasKey( _event, "keyCode", "number" ) ? _event.keyCode : -1,
+  var list = this;
+
+  if ( list.filter.__destroyed ) {
+    return;
+  }
+
+  var keyCode = hasKey( _event, "keyCode", "number" ) ? _event.keyCode : -1,
     val = list.$input.val();
 
   switch ( keyCode ) {
@@ -82,8 +115,13 @@ exports.filterChanged = function ( _event ) {
 };
 
 exports.windowKeyUp = function ( _event ) {
-  var list = this,
-    keyCode = hasKey( _event, "keyCode", "number" ) ? _event.keyCode : -1;
+  var list = this;
+
+  if ( list.filter.__destroyed ) {
+    return;
+  }
+
+  var keyCode = hasKey( _event, "keyCode", "number" ) ? _event.keyCode : -1;
 
   switch ( keyCode ) {
   case 27: // escape
@@ -93,21 +131,27 @@ exports.windowKeyUp = function ( _event ) {
 };
 
 exports.itemClick = function ( _event ) {
-  var list = this,
-    $item = $( _event.currentTarget );
+  var list = this;
+
+  if ( list.filter.__destroyed ) {
+    return;
+  }
+
+  var $item = $( _event.currentTarget );
 
   list.activeItemIndex = $item.parent().children().index( $item );
   list.filter.activeItem = list.getActiveItem();
   list.close();
-
 };
 
 exports.itempush = function ( _item ) {
-  var filter = this,
-    itemHash = md5( _item );
+  var filter = this;
 
-  // TODO: limit num items push
-  // TODO: check if the data is in the list before adding it
+  if ( filter.__destroyed ) {
+    return;
+  }
+
+  var itemHash = md5( _item );
 
   if ( !filter.__items[ itemHash ] ) {
     Object.defineProperty( _item, "__cid", {
@@ -121,43 +165,147 @@ exports.itempush = function ( _item ) {
 };
 
 exports.itemshift = function ( _item ) {
-  var filter = this,
-    itemHash = md5( _item );
+  var filter = this;
+
+  if ( filter.__destroyed ) {
+    return;
+  }
+
+  var itemHash = md5( _item );
   delete filter.__items[ itemHash ];
   filter.items.__shift();
 };
 
 exports.labelGet = function () {
   var filter = this;
+
+  if ( filter.__destroyed ) {
+    return;
+  }
+
   return filter.__label;
 };
 
 exports.labelSet = function ( _label ) {
   var filter = this;
-  filter.__label = cast( _label, "string", config.defaultButtonLabel );
+
+  if ( filter.__destroyed ) {
+    return;
+  }
+
+  filter.__label = cast( _label, "string", filter.__config.defaults.defaultButtonLabel );
   filter.$el.text( filter.__label );
   return filter.__label;
 };
 
 exports.listVisibleGet = function () {
   var filter = this;
+
+  if ( filter.__destroyed ) {
+    return;
+  }
+
   return filter.list.__visible;
 };
 
 exports.listVisibleSet = function ( _value ) {
-  var filter = this,
-    visible = cast( _value, "boolean", false );
+  var filter = this;
+
+  if ( filter.__destroyed ) {
+    return;
+  }
+
+  var visible = cast( _value, "boolean", false );
   return visible ? filter.list.open() : filter.list.close();
+};
+
+exports.putFocussedItemInView = function () {
+  var list = this;
+
+  if ( list.filter.__destroyed ) {
+    return;
+  }
+
+  setTimeout( function () {
+    var listHeight = list.$list.height(),
+      focussedItem = list.$list.find( "." + list.filter.__config.className + "-item-active" );
+
+    if ( focussedItem.length === 0 ) {
+      return;
+    }
+
+    var itemHeight = focussedItem.outerHeight(),
+      itemTop = focussedItem.position().top, // TODO: offset top could be good enough here
+      itemBottom = itemTop + itemHeight;
+
+    if ( itemTop < 0 || itemBottom > listHeight ) {
+      focussedItem[ 0 ].scrollIntoView( itemTop < 0 );
+    }
+
+  }, 10 );
+};
+
+exports.sortGet = function () {
+  var filter = this;
+
+  if ( filter.__destroyed ) {
+    return;
+  }
+
+  return filter.__sort;
+};
+
+exports.sortSet = function ( _value ) {
+  var filter = this;
+
+  if ( filter.__destroyed ) {
+    return;
+  }
+
+  var sortClassName = filter.__config.className + "-sort-",
+    sortClassNames = sortToggleOptions.join( " " + sortClassName ).trim();
+
+  filter.__sort = cast( _value, "string", null, sortToggleOptions );
+  filter.list.redraw();
+  filter.$wrapper.removeClass( sortClassNames ).addClass( filter.__sort ? sortClassName + filter.__sort : "" );
+  filter.emit( "sort" );
+  return filter.__sort;
+};
+
+exports.sortToggleClicked = function () {
+  var list = this;
+
+  if ( list.filter.__destroyed ) {
+    return;
+  }
+
+  var filter = list.filter,
+    currentSort = filter.sort,
+    index = _.indexOf( sortToggleOptions, currentSort ),
+    nextIndex = index + 1,
+    nextSort = sortToggleOptions[ nextIndex ] === undefined ? sortToggleOptions[ 0 ] : sortToggleOptions[ nextIndex ];
+
+  filter.sort = nextSort;
 };
 
 exports.valueGet = function () {
   var filter = this;
-  return filter.__value;
+
+  if ( filter.__destroyed ) {
+    return;
+  }
+
+  return filter.__value.value;
 };
 
 exports.valueSet = function ( _value ) {
   var filter = this;
-  filter.__value = new ItemValue( _value );
+
+  if ( filter.__destroyed ) {
+    return;
+  }
+
+  filter.__value = new ItemValue( filter.__config.defaults.itemLabelKey, _value );
   filter.label = filter.__value.key;
   filter.$el.text( filter.label );
   return filter.__value;

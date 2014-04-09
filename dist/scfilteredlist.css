@@ -1,24 +1,37 @@
-.hide {
-  display: none;
-}
-html body button[data-sc-filtered-list] + .sc-filtered-list-list {
-  display: none;
-  background-color: grey;
-}
-html body button[data-sc-filtered-list] + .sc-filtered-list-list.sc-filtered-list-visible {
-  display: block;
-}
-.sc-filtered-list.sc-filtered-list-list {
-  /**
-	 * Input
-	 */
-  /**
-	 * Header
-	 */
+.sc-filtered-list {
   /**
 	 * List
 	 */
 }
-.sc-filtered-list.sc-filtered-list-list > .sc-filtered-list-list-item-wrapper > .sc-filtered-list-list-item.sc-filtered-list-list-item-active {
+.sc-filtered-list.sc-filtered-list-sort-asc > .sc-filtered-list-container > .sc-filtered-list-input-container > .sc-filtered-list-sort-toggle:after {
+  content: "˅";
+}
+.sc-filtered-list.sc-filtered-list-sort-desc > .sc-filtered-list-container > .sc-filtered-list-input-container > .sc-filtered-list-sort-toggle:after {
+  content: "˄";
+}
+.sc-filtered-list.sc-filtered-list-sort-hidden > .sc-filtered-list-container > .sc-filtered-list-input-container > .sc-filtered-list-sort-toggle {
+  display: none;
+}
+.sc-filtered-list > .sc-filtered-list-container {
+  display: none;
+  background-color: grey;
+}
+.sc-filtered-list > .sc-filtered-list-container.sc-filtered-list-container-invisible {
+  visibility: hidden;
+  display: inherit;
+}
+.sc-filtered-list > .sc-filtered-list-container.sc-filtered-list-container-visible {
+  visibility: visible;
+  display: block;
+}
+.sc-filtered-list > .sc-filtered-list-container > .sc-filtered-list-input-container > .sc-filtered-list-sort-toggle:after {
+  content: "-";
+}
+.sc-filtered-list > .sc-filtered-list-container > .sc-filtered-list-items {
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.sc-filtered-list > .sc-filtered-list-container > .sc-filtered-list-items .sc-filtered-list-item.sc-filtered-list-item-active {
   background-color: #aaa;
 }

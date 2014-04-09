@@ -4,7 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
+    "postinstall": "bower install --config.interactive=false && gulp",
+    "test": "mocha && npm run pjs1 && npm run pjs2 && npm run pjs3 && npm run pjs4 && npm run pjs5",
+    "__test": "mocha && npm run pjs5",
+    "pjs1": "mocha-phantomjs -p ./node_modules/.bin/phantomjs testClient/open-close.html",
+    "pjs2": "mocha-phantomjs -p ./node_modules/.bin/phantomjs testClient/options-given-by-data-attrs.html",
+    "pjs3": "mocha-phantomjs -p ./node_modules/.bin/phantomjs testClient/destroy.html",
+    "pjs4": "mocha-phantomjs -p ./node_modules/.bin/phantomjs testClient/defaults.html",
+    "pjs5": "mocha-phantomjs -p ./node_modules/.bin/phantomjs testClient/more-than-one.html",
     "posttest": "mocha test/readme.js -R markdown > README.md"
   },
   "author": "David Tsuji",
@@ -20,7 +27,12 @@
     "gulp-uglify": "^0.2.1",
     "gulp-minify-css": "^0.3.0",
     "gulp-jshint": "^1.5.3",
-    "jshint-stylish": "^0.1.5"
+    "jshint-stylish": "^0.1.5",
+    "gulp-livereload": "^1.2.0",
+    "mocha-phantomjs": "^3.3.2",
+    "phantomjs": "^1.9.7-3",
+    "mocha": "^1.18.2",
+    "async": "^0.7.0"
   },
   "dependencies": {
     "sc-is": "0.0.3",
@@ -29,7 +41,8 @@
     "emitter-component": "^1.1.1",
     "sc-cast": "0.0.6",
     "sg-observable-array": "0.0.2",
-    "object-hash": "^0.2.3",
-    "fuzzaldrin": "^1.0.0"
+    "fuzzaldrin": "^1.0.0",
+    "sc-merge": "0.0.3",
+    "sc-guid": "0.0.4"
   }
 }
