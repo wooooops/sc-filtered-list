@@ -113,6 +113,19 @@ exports.filterChanged = function ( _event ) {
 
 };
 
+exports.indexOf = function ( _array, _value ) {
+  var array = is.array( _array ) ? _array : [],
+    index = -1;
+
+  array.forEach( function ( _val, _i ) {
+    if ( index === -1 && _value === _val ) {
+      index = _i;
+    }
+  } );
+
+  return index;
+};
+
 exports.windowKeyUp = function ( _event ) {
   var list = this;
 
@@ -150,15 +163,17 @@ exports.itempush = function ( _item ) {
     return;
   }
 
-  var itemHash = md5( _item );
+  if ( !_item.hasOwnProperty( "__cid" ) ) {
+    var itemHash = md5( _item );
 
-  if ( !filter.__items[ itemHash ] ) {
-    Object.defineProperty( _item, "__cid", {
-      value: itemHash
-    } );
-    filter.__items[ itemHash ] = _item;
-    filter.items.__push( _item );
-    filter.list.redraw();
+    if ( !filter.__items[ itemHash ] ) {
+      Object.defineProperty( _item, "__cid", {
+        value: itemHash
+      } );
+      filter.__items[ itemHash ] = _item;
+      filter.items.__push( _item );
+      filter.list.redraw();
+    }
   }
 
 };
@@ -287,7 +302,7 @@ exports.sortToggleClicked = function () {
 
   var filter = list.filter,
     currentSort = filter.sort,
-    index = _.indexOf( sortToggleOptions, currentSort ),
+    index = exports.indexOf( sortToggleOptions, currentSort ),
     nextIndex = index + 1,
     nextSort = sortToggleOptions[ nextIndex ] === undefined ? sortToggleOptions[ 0 ] : sortToggleOptions[ nextIndex ];
 

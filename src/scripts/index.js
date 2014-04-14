@@ -153,16 +153,10 @@ FilteredList.prototype.fetch = function () {
     return;
   }
 
-  if ( !self.throttledFetch ) {
-    self.throttledFetch = _.throttle( function () {
-      var value = self.list.$input.val();
+  var value = self.list.$input.val();
 
-      self.__lastFetchedValue = value;
-      self.emit( "fetch", self.__lastFetchedValue );
-    }, 10 ); // TODO: check this
-  }
-
-  self.throttledFetch();
+  self.__lastFetchedValue = value;
+  self.emit( "fetch", self.__lastFetchedValue );
 };
 
 emitter( FilteredList.prototype );
