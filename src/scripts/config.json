@@ -10,11 +10,11 @@
     "listTitle": "Select an item"
   },
   "templates": {
-    "listWrapper": "<div class='<%= config.className %>-container'><%= config.templates.listInput %><%= config.templates.listHeader %><%= config.templates.listItemWrapper %></div>",
-    "listInput": "<div class='<%= config.className %>-input-container'><input type='text' class='<%= config.className %>-input'><%= config.templates.listSortToggle %></div>",
-    "listHeader": "<header class='<%= config.className %>-header'><%= config.defaults.defalutListTitle %></header>",
-    "listItemWrapper": "<ul class='<%= config.className %>-items'></ul>",
-    "listItem": "<li class='<%= config.className %>-item' data-cid='<%= cid %>'><%= key %></li>",
-    "listSortToggle": "<button type='button' class='<%= config.className %>-sort-toggle'></button>"
+    "listWrapper": "<div class='{{config.className}}-container'>{{!config.templates.listInput}}{{!config.templates.listHeader}}{{!config.templates.listItemWrapper}}</div>",
+    "listInput": "<div class='{{config.className}}-input-container'><input type='text' class='{{config.className}}-input'>{{!config.templates.listSortToggle}}</div>",
+    "listHeader": "<header class='{{config.className}}-header'>{{!config.defaults.listTitle}}</header>",
+    "listItemWrapper": "<ul class='{{config.className}}-items'></ul>",
+    "listItem": "<li class='{{config.className}}-item' data-cid='{{cid}}'>{{key}}</li>",
+    "listSortToggle": "<button type='button' class='{{config.className}}-sort-toggle'></button>"
   }
 }

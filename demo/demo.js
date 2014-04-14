@@ -19,10 +19,10 @@ var list;
     } );
 
     list.on( "filtered", function () {
-      console.log( "demo: list filtered", "(" + list.results.length, "of", list.items.length + ")" );
+      // console.log( "demo: list filtered", "(" + list.results.length, "of", list.items.length + ")" );
       if ( list.results.length === 0 ) {
         if ( list.items.length > 0 && list.items.length < 1000 ) {
-          console.log( "append the rest of the items" );
+          // console.log( "append the rest of the items" );
           dummy.data.items.forEach( function ( _item ) {
             list.items.push( _item );
           } );

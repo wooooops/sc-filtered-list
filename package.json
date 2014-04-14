@@ -35,12 +35,13 @@
     "async": "^0.7.0"
   },
   "dependencies": {
+    "emitter-component": "^1.1.1",
+    "fuzzaldrin": "^1.0.0",
+    "minstache": "^1.1.0",
+    "sc-guid": "0.0.4",
     "sc-is": "0.0.3",
     "sc-md5": "0.0.1",
-    "emitter-component": "^1.1.1",
-    "sg-observable-array": "0.0.2",
-    "fuzzaldrin": "^1.0.0",
     "sc-merge": "0.0.3",
-    "sc-guid": "0.0.4"
+    "sg-observable-array": "0.0.2"
   }
 }

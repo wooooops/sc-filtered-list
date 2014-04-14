@@ -1,6 +1,7 @@
 var helpers = require( "./helpers" ),
+  fuzzy = require( "fuzzaldrin" ),
   merge = require( "sc-merge" ),
-  fuzzy = require( "fuzzaldrin" );
+  minstache = require( "minstache" );
 
 var List = function ( _filter ) {
   var self = this,
@@ -34,14 +35,14 @@ var List = function ( _filter ) {
   config = self.filter.__config;
 
   Object.keys( config.templates ).forEach( function ( _templateName ) {
-    self.__templates[ _templateName ] = _.template( config.templates[ _templateName ], {
+    self.__templates[ _templateName ] = minstache( config.templates[ _templateName ], {
       config: config,
       cid: "",
       key: ""
     } );
   } );
 
-  self.$el = $( _.template( self.__templates.listWrapper, {
+  self.$el = $( minstache( self.__templates.listWrapper, {
     config: merge( config, {
       templates: self.__templates
     } )
@@ -170,7 +171,7 @@ List.prototype.redraw = function () {
 
     results.forEach( function ( _item ) {
       _item.key = _item[ config.defaults.itemLabelKey ];
-      itemsMarkup += _.template( config.templates.listItem, merge( {
+      itemsMarkup += minstache( config.templates.listItem, merge( {
         config: config,
         cid: _item.__cid
       }, _item ) );
