@@ -62,7 +62,7 @@ describe( "more than one", function () {
         setTimeout( function () {
           filter1.list.$list.children().should.have.a.lengthOf( 2 );
           cb();
-        }, 100 )
+        }, 100 );
       },
 
       function ( cb ) {
@@ -71,7 +71,7 @@ describe( "more than one", function () {
           filter2.list.$list.children().should.have.a.lengthOf( 3 );
           filter2.list.$sortToggle.is( ":visible" ).should.be.false;
           cb();
-        }, 100 )
+        }, 100 );
       },
 
       function ( cb ) {
@@ -79,7 +79,7 @@ describe( "more than one", function () {
         setTimeout( function () {
           filter3.list.$list.children().should.have.a.lengthOf( 1 );
           cb();
-        }, 100 )
+        }, 100 );
       }
     ], _done );
 
