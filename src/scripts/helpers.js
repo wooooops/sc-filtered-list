@@ -1,5 +1,4 @@
-var cast = require( "sc-cast" ),
-  hasKey = require( "sc-haskey" ),
+var is = require( "sc-is" ),
   ItemValue = require( "./item-value" ),
   sortToggleOptions = [ "", "desc", "asc" ],
   md5 = require( "sc-md5" );
@@ -42,7 +41,7 @@ exports.activeItemIndexSet = function ( _value ) {
     return;
   }
 
-  var index = cast( _value, "number", 0 ),
+  var index = is.a.number( _value ) ? _value : 0,
     itemActiveClassName = list.filter.__config.className + "-item-active",
     $itemChildren = list.$list.children(),
     $firstItem = $( $itemChildren[ 0 ] ),
@@ -68,7 +67,7 @@ exports.bodyClick = function ( _event ) {
 
   var buttonClass = "." + filter.__config.className + "-button",
     containerClass = "." + filter.__config.className + "-container",
-    $clickedElement = $( hasKey( _event, "target" ) ? _event.target : null ),
+    $clickedElement = $( is.object( _event ) && _event.target ? _event.target : null ),
     $thisParent = $clickedElement.closest( "[data-" + filter.__config.className + "-cid=" + filter.__cid + "]" ),
     clickedButton = $thisParent.length > 0 && ( $clickedElement.is( buttonClass ) || $clickedElement.closest( buttonClass ).length ) ? true : false,
     clickedList = $thisParent.length > 0 && ( $clickedElement.is( containerClass ) || $clickedElement.closest( containerClass ).length ) ? true : false;
@@ -87,7 +86,7 @@ exports.filterChanged = function ( _event ) {
     return;
   }
 
-  var keyCode = hasKey( _event, "keyCode", "number" ) ? _event.keyCode : -1,
+  var keyCode = is.object( _event ) && is.number( _event.keyCode ) ? _event.keyCode : -1,
     val = list.$input.val();
 
   switch ( keyCode ) {
@@ -121,7 +120,7 @@ exports.windowKeyUp = function ( _event ) {
     return;
   }
 
-  var keyCode = hasKey( _event, "keyCode", "number" ) ? _event.keyCode : -1;
+  var keyCode = is.object( _event ) && is.number( _event.keyCode ) ? _event.keyCode : -1;
 
   switch ( keyCode ) {
   case 27: // escape
@@ -193,7 +192,7 @@ exports.labelSet = function ( _label ) {
     return;
   }
 
-  filter.__label = cast( _label, "string", filter.__config.defaults.defaultButtonLabel );
+  filter.__label = _label || filter.__config.defaults.defaultButtonLabel;
   filter.$el.text( filter.__label );
   return filter.__label;
 };
@@ -215,7 +214,7 @@ exports.listVisibleSet = function ( _value ) {
     return;
   }
 
-  var visible = cast( _value, "boolean", false );
+  var visible = _value === true || false;
   return visible ? filter.list.open() : filter.list.close();
 };
 
@@ -256,7 +255,8 @@ exports.sortGet = function () {
 };
 
 exports.sortSet = function ( _value ) {
-  var filter = this;
+  var filter = this,
+    sortOption;
 
   if ( filter.__destroyed ) {
     return;
@@ -265,7 +265,13 @@ exports.sortSet = function ( _value ) {
   var sortClassName = filter.__config.className + "-sort-",
     sortClassNames = sortToggleOptions.join( " " + sortClassName ).trim();
 
-  filter.__sort = cast( _value, "string", null, sortToggleOptions );
+  sortToggleOptions.forEach( function ( _sortOption ) {
+    if ( !sortOption && _sortOption === _value ) {
+      sortOption = _value;
+    }
+  } );
+
+  filter.__sort = sortOption || sortToggleOptions[ 0 ];
   filter.list.redraw();
   filter.$wrapper.removeClass( sortClassNames ).addClass( filter.__sort ? sortClassName + filter.__sort : "" );
   filter.emit( "sort" );

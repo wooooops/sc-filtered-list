@@ -36,10 +36,8 @@
   },
   "dependencies": {
     "sc-is": "0.0.3",
-    "sc-haskey": "0.0.2",
     "sc-md5": "0.0.1",
     "emitter-component": "^1.1.1",
-    "sc-cast": "0.0.6",
     "sg-observable-array": "0.0.2",
     "fuzzaldrin": "^1.0.0",
     "sc-merge": "0.0.3",

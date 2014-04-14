@@ -1,5 +1,4 @@
-var cast = require( "sc-cast" ),
-  helpers = require( "./helpers" ),
+var helpers = require( "./helpers" ),
   merge = require( "sc-merge" ),
   fuzzy = require( "fuzzaldrin" );
 
