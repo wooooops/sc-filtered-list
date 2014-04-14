@@ -6,8 +6,8 @@
     "maxNumItems": 10,
     "sortControlVisible": true,
     "itemLabelKey": "name",
-    "defaultButtonLabel": "Choose one",
-    "defalutListTitle": "Select an item"
+    "buttonLabel": "Choose one",
+    "listTitle": "Select an item"
   },
   "templates": {
     "listWrapper": "<div class='<%= config.className %>-container'><%= config.templates.listInput %><%= config.templates.listHeader %><%= config.templates.listItemWrapper %></div>",

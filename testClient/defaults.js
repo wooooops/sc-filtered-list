@@ -1,7 +1,7 @@
 var FilteredList = scfilteredlist;
 
-FilteredList.defaults.defaultButtonLabel = "__defaultButtonLabel";
-FilteredList.defaults.defalutListTitle = "__defalutListTitle";
+FilteredList.defaults.buttonLabel = "__buttonLabel";
+FilteredList.defaults.listTitle = "__listTitle";
 FilteredList.defaults.maxNumItemsVisible = 3;
 FilteredList.defaults.maxNumItems = 10;
 FilteredList.defaults.sortControlVisible = false;
@@ -28,8 +28,8 @@ describe( "defaults", function () {
 
     setTimeout( function () {
 
-      list.$el.text().should.equal( "__defaultButtonLabel" );
-      list.list.$header.text().should.equal( "__defalutListTitle" );
+      list.$el.text().should.equal( "__buttonLabel" );
+      list.list.$header.text().should.equal( "__listTitle" );
       list.list.$list.children().length.should.equal( 10 );
       list.list.$sortToggle.is( ":visible" ).should.be.false;
 
@@ -50,8 +50,8 @@ describe( "defaults", function () {
     this.slow( 5000 );
 
     var list = new FilteredList( $( "button[data-sc-filtered-list]" ), {
-      defaultButtonLabel: "choose",
-      defalutListTitle: "",
+      buttonLabel: "choose",
+      listTitle: "",
       maxNumItemsVisible: 10,
       maxNumItems: 20,
       sortControlVisible: true,
@@ -90,8 +90,8 @@ describe( "defaults", function () {
   } );
 
   it( "by setting giving the constructor options, they should not have overriden the process defaults", function () {
-    FilteredList.defaults.defaultButtonLabel.should.equal( "__defaultButtonLabel" );
-    FilteredList.defaults.defalutListTitle = "__defalutListTitle";
+    FilteredList.defaults.buttonLabel.should.equal( "__buttonLabel" );
+    FilteredList.defaults.listTitle = "__listTitle";
     FilteredList.defaults.maxNumItemsVisible = 3;
     FilteredList.defaults.maxNumItems = 10;
     FilteredList.defaults.sortControlVisible = false;

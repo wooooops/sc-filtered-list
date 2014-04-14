@@ -8,11 +8,11 @@ describe( "options-given-by-data-attrs", function () {
   } );
 
   it( "the button label should come from the data attrs", function () {
-    filter.$el.html().should.equal( options.defaultButtonLabel );
+    filter.$el.html().should.equal( options.buttonLabel );
   } );
 
   it( "the list title should come from the data attrs", function () {
-    filter.list.$header.html().should.equal( options.defalutListTitle );
+    filter.list.$header.html().should.equal( options.listTitle );
   } );
 
   describe( "options by given object on instantiation", function () {
@@ -22,8 +22,8 @@ describe( "options-given-by-data-attrs", function () {
       $( "section.test" ).append( $button );
 
       new FilteredList( $button, {
-        defaultButtonLabel: "a",
-        defalutListTitle: "b"
+        buttonLabel: "a",
+        listTitle: "b"
       } );
 
     } );

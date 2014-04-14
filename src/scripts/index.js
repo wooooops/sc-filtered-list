@@ -105,7 +105,7 @@ var FilteredList = function ( _el, _defaults ) {
   self.__original.buttonText = self.$el.text();
 
   var itemValue = {};
-  itemValue[ self.__config.defaults.itemLabelKey ] = self.__config.defaults.defaultButtonLabel;
+  itemValue[ self.__config.defaults.itemLabelKey ] = self.__config.defaults.buttonLabel;
   self.value = itemValue;
 
   self.$el
