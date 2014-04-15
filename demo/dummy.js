@@ -8,7 +8,7 @@ dummy.data.items = [ {
   "gender": "female"
 }, {
   "guid": "2c97b11f-f839-43b0-9ce2-0dceb881b896",
-  "name": "Alison Henderson",
+  "name": "Alison Henderson Lorem ipsum dolor sit amet",
   "gender": "female"
 }, {
   "guid": "c190d54c-e25b-4634-8113-ccd648533212",

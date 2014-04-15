@@ -1,0 +1,40 @@
+ <!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+
+	<!-- Test dependencies -->
+	<script src="../bower_components/jquery/dist/jquery.js"></script>
+	<script src="../bower_components/async/lib/async.js"></script>
+	<link rel="stylesheet" href="../node_modules/mocha/mocha.css">
+	<script src="../node_modules/mocha/mocha.js"></script>
+	<script src="../node_modules/should/should.js"></script>
+
+	<!-- scfilteredlist dependencies -->
+	<link rel="stylesheet" href="../dist/scfilteredlist.css">
+	<script src="../dist/scfilteredlist.min.js"></script>
+
+</head>
+<body>
+
+	<div id="mocha"></div>
+
+	<section class="test">
+		
+		<button data-sc-filtered-list></button>
+
+	</section>
+
+	<script>
+		mocha.ui('bdd');
+		mocha.reporter('html');
+	</script>
+	<script src="standard-tests.js"></script>
+	<script src="fuzzy-search.js"></script>
+	<script>
+		if (window.mochaPhantomJS) { mochaPhantomJS.run(); }
+		else { mocha.run(); }
+	</script>
+</body>
+</html>

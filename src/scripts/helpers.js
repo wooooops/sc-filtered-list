@@ -149,6 +149,8 @@ exports.itemClick = function ( _event ) {
     return;
   }
 
+  _event.preventDefault();
+
   var $item = $( _event.currentTarget );
 
   list.activeItemIndex = $item.parent().children().index( $item );
@@ -293,7 +295,7 @@ exports.sortSet = function ( _value ) {
   return filter.__sort;
 };
 
-exports.sortToggleClicked = function () {
+exports.sortToggleClicked = function ( _event ) {
   var list = this;
 
   if ( list.filter.__destroyed ) {

@@ -1,7 +1,8 @@
 var helpers = require( "./helpers" ),
   fuzzy = require( "fuzzaldrin" ),
   merge = require( "sc-merge" ),
-  minstache = require( "minstache" );
+  minstache = require( "minstache" ),
+  debounce = require( "debounce" );
 
 var List = function ( _filter ) {
   var self = this,
@@ -48,6 +49,8 @@ var List = function ( _filter ) {
     } )
   } ) );
 
+  self.$el.width( config.defaults.minWidth );
+
   self.$input = self.$el.find( "." + config.className + "-input" );
   self.$header = self.$el.find( "." + config.className + "-header" );
   self.$list = self.$el.find( "." + config.className + "-items" );
@@ -58,6 +61,12 @@ var List = function ( _filter ) {
   self.filter.on( "filterChanged", self.redraw.bind( self ) );
   self.filter.on( "itemFocus", helpers.putFocussedItemInView.bind( self ) );
   self.filter.$el.after( self.$el );
+
+  self.filter.once( config.name + "-ready", function () {
+    if ( config.defaults.sort ) {
+      self.filter.sort = config.defaults.sort;
+    }
+  } );
 };
 
 List.prototype.close = function () {
@@ -131,7 +140,7 @@ List.prototype.open = function () {
   return self.__visible;
 };
 
-List.prototype.redraw = function () {
+List.prototype.redraw = debounce( function () {
   var self = this,
     config = self.filter.__config;
 
@@ -139,70 +148,71 @@ List.prototype.redraw = function () {
     return;
   }
 
-  if ( self.redrawTimeout ) {
-    clearTimeout( self.redrawTimeout );
-    return self.redrawTimeout = null;
+  var filterBy = self.$input.val() || "",
+    itemsMarkup = "",
+    results;
+
+  if ( config.defaults.fuzzy ) {
+    results = fuzzy.filter( self.filter.items, filterBy, {
+      key: config.defaults.itemLabelKey,
+      maxResults: config.defaults.maxNumItems
+    } );
+  } else {
+    var rx = new RegExp( "\\b" + filterBy, "i" );
+    results = [];
+    self.filter.items.forEach( function ( _item, _i ) {
+      if ( _i < config.defaults.maxNumItems ) {
+        if ( rx.test( _item[ config.defaults.itemLabelKey ] ) ) {
+          results.push( _item );
+        }
+      }
+    } );
   }
 
-  self.redrawTimeout = setTimeout( function () {
-    self.redrawTimeout = null;
 
-    if ( self.__destroyed ) {
-      return;
-    }
-
-    var filterBy = self.$input.val(),
-      itemsMarkup = "",
-      results = fuzzy.filter( self.filter.items, filterBy || "", {
-        key: config.defaults.itemLabelKey,
-        maxResults: self.filter.__config.defaults.maxNumItems
-      } );
-
-    if ( self.filter.__sort ) {
-      results.sort( function ( a, b ) {
-        var order = self.filter.__sort === "desc" ? a.name > b.name : a.name < b.name;
-        return order ? 1 : -1;
-      } );
-    }
-
-    self.filter.results = results;
-
-    self.filter.emit( "filtered" );
-
-    results.forEach( function ( _item ) {
-      _item.key = _item[ config.defaults.itemLabelKey ];
-      itemsMarkup += minstache( config.templates.listItem, merge( {
-        config: config,
-        cid: _item.__cid
-      }, _item ) );
+  if ( self.filter.__sort ) {
+    results.sort( function ( a, b ) {
+      var order = self.filter.__sort === "desc" ? a.name > b.name : a.name < b.name;
+      return order ? 1 : -1;
     } );
+  }
 
-    self.$list.empty().html( itemsMarkup );
-    self.activeItemIndex = self.activeItemIndex;
+  self.filter.results = results;
 
-    if ( self.__visible ) {
-      setTimeout( function () {
+  self.filter.emit( "filtered" );
 
-        if ( self.__destroyed ) {
-          return;
-        }
+  results.forEach( function ( _item ) {
+    _item.key = _item[ config.defaults.itemLabelKey ];
+    itemsMarkup += minstache( config.templates.listItem, merge( {
+      config: config,
+      cid: _item.__cid
+    }, _item ) );
+  } );
 
-        var visibleItemsHeight = 0;
-        self.$el.addClass( config.className + "-container-invisible" );
+  self.$list.empty().html( itemsMarkup );
+  self.activeItemIndex = self.activeItemIndex;
 
-        self.$list.find( ">:lt(" + self.filter.__config.defaults.maxNumItemsVisible + ")" ).each( function ( _i, _el ) {
-          visibleItemsHeight += $( _el ).outerHeight();
-        } );
+  if ( self.__visible ) {
+    setTimeout( function () {
 
-        self.$list.height( visibleItemsHeight );
-        self.$el.addClass( config.className + "-container-visible" ).removeClass( config.className + "-container-invisible" );
-        self.filter.emit( "redraw" );
-      }, 0 );
+      if ( self.__destroyed ) {
+        return;
+      }
 
-    }
+      var visibleItemsHeight = 0;
+      self.$el.addClass( config.className + "-container-invisible" );
 
-  }, 0 );
+      self.$list.find( ">:lt(" + config.defaults.maxNumItemsVisible + ")" ).each( function ( _i, _el ) {
+        visibleItemsHeight += $( _el ).outerHeight();
+      } );
 
-};
+      self.$list.height( visibleItemsHeight );
+      self.$el.addClass( config.className + "-container-visible" ).removeClass( config.className + "-container-invisible" );
+      self.filter.emit( "redraw" );
+    }, 0 );
+
+  }
+
+}, 10 );
 
 module.exports = List;

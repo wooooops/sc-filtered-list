@@ -24,8 +24,8 @@ gulp.task( "jshint", function () {
     .pipe( jshint.reporter( jshintReporter ) );
 } );
 
-gulp.task( "minifyScripts", [ "scriptMain" ], function () {
-  return gulp.src( [ "./dist/" + moduleName + ".js" ] )
+gulp.task( "minifyScripts", [ "jshint", "scriptMain" ], function () {
+  gulp.src( [ "./dist/" + moduleName + ".js" ] )
     .pipe( uglify() )
     .pipe( rename( moduleName + ".min.js" ) )
     .pipe( gulp.dest( "./dist/" ) )
@@ -33,14 +33,14 @@ gulp.task( "minifyScripts", [ "scriptMain" ], function () {
 } );
 
 gulp.task( "minifyStyles", [ "stylesMain" ], function () {
-  return gulp.src( [ "./dist/" + moduleName + ".css" ] )
+  gulp.src( [ "./dist/" + moduleName + ".css" ] )
     .pipe( css() )
     .pipe( rename( moduleName + ".min.css" ) )
     .pipe( gulp.dest( "./dist/" ) )
     .on( "end", livereload( ".js" ) );
 } );
 
-gulp.task( "scriptMain", [ "jshint" ], function () {
+gulp.task( "scriptMain", function () {
   return gulp.src( [ "./src/scripts/index.js" ] )
     .pipe( browserify( {
       standalone: moduleName,
@@ -59,7 +59,7 @@ gulp.task( "stylesMain", function () {
     .on( "end", livereload( ".css" ) );
 } );
 
-gulp.task( "test", function () {
+gulp.task( "test", [ "scriptMain", "stylesMain" ], function () {
   return gulp.src( "" ).pipe( shell( [
     "npm test"
   ], {
@@ -79,7 +79,7 @@ gulp.task( "watch", function () {
 } );
 
 gulp.task( "default", [ "build", "test" ] );
-gulp.task( "build", [ "jshint", "scripts", "styles", "minify" ] );
+gulp.task( "build", [ "scripts", "styles", "minify" ] );
 gulp.task( "scripts", [ "scriptMain" ] );
 gulp.task( "styles", [ "stylesMain" ] );
 gulp.task( "minify", [ "minifyScripts", "minifyStyles" ] );

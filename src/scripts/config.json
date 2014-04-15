@@ -2,19 +2,22 @@
   "name": "scfilteredlist",
   "className": "sc-filtered-list",
   "defaults": {
-    "maxNumItemsVisible": 7,
-    "maxNumItems": 10,
-    "sortControlVisible": true,
-    "itemLabelKey": "name",
     "buttonLabel": "Choose one",
-    "listTitle": "Select an item"
+    "fuzzy": false,
+    "itemLabelKey": "name",
+    "listTitle": "Select an item",
+    "maxNumItems": 10,
+    "maxNumItemsVisible": 7,
+    "minWidth": 300,
+    "sort": "desc",
+    "sortControlVisible": true
   },
   "templates": {
     "listWrapper": "<div class='{{config.className}}-container'>{{!config.templates.listInput}}{{!config.templates.listHeader}}{{!config.templates.listItemWrapper}}</div>",
-    "listInput": "<div class='{{config.className}}-input-container'><input type='text' class='{{config.className}}-input'>{{!config.templates.listSortToggle}}</div>",
-    "listHeader": "<header class='{{config.className}}-header'>{{!config.defaults.listTitle}}</header>",
-    "listItemWrapper": "<ul class='{{config.className}}-items'></ul>",
-    "listItem": "<li class='{{config.className}}-item' data-cid='{{cid}}'>{{key}}</li>",
-    "listSortToggle": "<button type='button' class='{{config.className}}-sort-toggle'></button>"
+    "listInput": "<div class='{{config.className}}-input-container'><input type='text' class='{{config.className}}-input form-control'></div>",
+    "listHeader": "<header class='{{config.className}}-header panel-heading'>{{!config.defaults.listTitle}}{{!config.templates.listSortToggle}}</header>",
+    "listItemWrapper": "<div class='{{config.className}}-items list-group'></div>",
+    "listItem": "<a href class='{{config.className}}-item list-group-item' data-cid='{{cid}}'>{{!key}}</a>",
+    "listSortToggle": "<button type='button' class='{{config.className}}-sort-toggle btn btn-default btn-xs' title='sort'></button>"
   }
 }

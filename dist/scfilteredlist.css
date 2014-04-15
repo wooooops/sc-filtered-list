@@ -1,20 +1,44 @@
 .sc-filtered-list {
+  position: relative;
+  display: inline-table;
   /**
 	 * List
 	 */
 }
-.sc-filtered-list.sc-filtered-list-sort-asc > .sc-filtered-list-container > .sc-filtered-list-input-container > .sc-filtered-list-sort-toggle:after {
+.sc-filtered-list.sc-filtered-list-sort-asc .sc-filtered-list-container .sc-filtered-list-sort-toggle:after {
   content: "˅";
 }
-.sc-filtered-list.sc-filtered-list-sort-desc > .sc-filtered-list-container > .sc-filtered-list-input-container > .sc-filtered-list-sort-toggle:after {
+.sc-filtered-list.sc-filtered-list-sort-asc .sc-filtered-list-container .sc-filtered-list-sort-toggle.btn {
+  -webkit-transform: rotate(90deg) translate(-50%, 50%);
+  -moz-transform: rotate(90deg) translate(-50%, 50%);
+  transform: rotate(90deg) translate(-50%, 50%);
+}
+.sc-filtered-list.sc-filtered-list-sort-asc .sc-filtered-list-container .sc-filtered-list-sort-toggle.btn:before {
+  content: "\e079";
+}
+.sc-filtered-list.sc-filtered-list-sort-desc .sc-filtered-list-container .sc-filtered-list-sort-toggle:after {
   content: "˄";
 }
-.sc-filtered-list.sc-filtered-list-sort-hidden > .sc-filtered-list-container > .sc-filtered-list-input-container > .sc-filtered-list-sort-toggle {
+.sc-filtered-list.sc-filtered-list-sort-desc .sc-filtered-list-container .sc-filtered-list-sort-toggle.btn {
+  -webkit-transform: rotate(90deg) translate(-50%, 50%);
+  -moz-transform: rotate(90deg) translate(-50%, 50%);
+  transform: rotate(90deg) translate(-50%, 50%);
+}
+.sc-filtered-list.sc-filtered-list-sort-desc .sc-filtered-list-container .sc-filtered-list-sort-toggle.btn:before {
+  content: "\e080";
+}
+.sc-filtered-list.sc-filtered-list-sort-hidden .sc-filtered-list-container .sc-filtered-list-sort-toggle {
   display: none;
 }
 .sc-filtered-list > .sc-filtered-list-container {
   display: none;
-  background-color: grey;
+  background-color: #eeeeee;
+  position: absolute;
+  top: 100%;
+  left: 0px;
+  border: 1px solid #d5d5d5;
+  -webkit-box-shadow: 0 2px 5px #eeeeee;
+  box-shadow: 0 2px 5px #eeeeee;
 }
 .sc-filtered-list > .sc-filtered-list-container.sc-filtered-list-container-invisible {
   visibility: hidden;
@@ -24,14 +48,82 @@
   visibility: visible;
   display: block;
 }
-.sc-filtered-list > .sc-filtered-list-container > .sc-filtered-list-input-container > .sc-filtered-list-sort-toggle:after {
+.sc-filtered-list > .sc-filtered-list-container .sc-filtered-list-input.form-control {
+  border: none;
+  border-radius: 0px;
+  -webkit-box-shadow: inset 0 0 3px #eeeeee;
+  box-shadow: inset 0 0 3px #eeeeee;
+}
+.sc-filtered-list > .sc-filtered-list-container .sc-filtered-list-input.form-control:focus {
+  -webkit-box-shadow: inset 0 0 3px #428bca;
+  box-shadow: inset 0 0 3px #428bca;
+}
+.sc-filtered-list > .sc-filtered-list-container .sc-filtered-list-sort-toggle {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.sc-filtered-list > .sc-filtered-list-container .sc-filtered-list-sort-toggle:after {
   content: "-";
 }
-.sc-filtered-list > .sc-filtered-list-container > .sc-filtered-list-items {
+.sc-filtered-list > .sc-filtered-list-container .sc-filtered-list-sort-toggle.btn {
+  border: none;
+  border-radius: 100%;
+  width: 23px;
+  height: 23px;
+  background-color: #d5d5d5;
+  outline: none;
+  font-family: 'Glyphicons Halflings';
+  font-size: 10px;
+}
+.sc-filtered-list > .sc-filtered-list-container .sc-filtered-list-sort-toggle.btn:hover {
+  color: #FFF;
+  background-color: #bbbbbb;
+}
+.sc-filtered-list > .sc-filtered-list-container .sc-filtered-list-sort-toggle.btn:before {
+  content: "\2212";
+}
+.sc-filtered-list > .sc-filtered-list-container .sc-filtered-list-sort-toggle.btn:after {
+  content: "";
+}
+.sc-filtered-list > .sc-filtered-list-container .sc-filtered-list-header {
+  position: relative;
+}
+.sc-filtered-list > .sc-filtered-list-container .sc-filtered-list-header.panel-heading {
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  border-top: 1px solid #d5d5d5;
+  font-weight: bold;
+}
+.sc-filtered-list > .sc-filtered-list-container .sc-filtered-list-header .sc-filtered-list-sort-toggle {
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+.sc-filtered-list > .sc-filtered-list-container .sc-filtered-list-items {
+  margin: 0;
   position: relative;
   overflow-x: hidden;
   overflow-y: auto;
 }
-.sc-filtered-list > .sc-filtered-list-container > .sc-filtered-list-items .sc-filtered-list-item.sc-filtered-list-item-active {
-  background-color: #aaa;
+.sc-filtered-list > .sc-filtered-list-container .sc-filtered-list-items .sc-filtered-list-item {
+  display: block;
+}
+.sc-filtered-list > .sc-filtered-list-container .sc-filtered-list-items .sc-filtered-list-item.list-group-item {
+  border-left: none;
+  border-right: none;
+}
+.sc-filtered-list > .sc-filtered-list-container .sc-filtered-list-items .sc-filtered-list-item.list-group-item:first-child {
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+}
+.sc-filtered-list > .sc-filtered-list-container .sc-filtered-list-items .sc-filtered-list-item.list-group-item:last-child {
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-bottom: 0px;
+}
+.sc-filtered-list > .sc-filtered-list-container .sc-filtered-list-items .sc-filtered-list-item.list-group-item.sc-filtered-list-item-active {
+  background-color: #428bca;
+  color: #FFF;
 }

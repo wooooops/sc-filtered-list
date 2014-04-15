@@ -1,5 +1,14 @@
 var FilteredList = scfilteredlist;
 
+var itemLabelsShouldBe = function ( _filter ) {
+  var args = Array.prototype.slice.call( arguments ).splice( 1 );
+
+  _filter.list.$list.children().should.have.a.lengthOf( args.length );
+  args.forEach( function ( _value, _i ) {
+    _filter.list.$list.find( ":nth-child(" + ( _i + 1 ) + ")" ).text().should.equal( _value );
+  } );
+};
+
 describe( "standard tests", function () {
 
   it( "the plugin should have rendered", function () {

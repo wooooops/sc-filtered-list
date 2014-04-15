@@ -12,7 +12,7 @@ describe( "options-given-by-data-attrs", function () {
   } );
 
   it( "the list title should come from the data attrs", function () {
-    filter.list.$header.html().should.equal( options.listTitle );
+    filter.list.$header.text().should.equal( options.listTitle );
   } );
 
   describe( "options by given object on instantiation", function () {

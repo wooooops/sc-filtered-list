@@ -101,7 +101,6 @@ var FilteredList = function ( _el, _defaults ) {
   } );
 
   self.list = new List( self );
-
   self.__original.buttonText = self.$el.text();
 
   var itemValue = {};
@@ -124,6 +123,7 @@ var FilteredList = function ( _el, _defaults ) {
   $( window ).on( "click." + self.__config.name, helpers.bodyClick.bind( self ) );
 
   self.fetch();
+  self.emit( self.__config.name + "-ready" );
 };
 
 FilteredList.prototype.destroy = function () {
