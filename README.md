@@ -17,6 +17,8 @@
   `sc-filtered-list` is a UI control to allow the user to quickly choose a
   single object from a list of many objects.
   
+  <img src="https://raw.githubusercontent.com/SPEAKUI/sc-filtered-list/master/demo/demo.gif" style="align: center">
+  
 # Installation
   
   Get [Node.js](http://nodejs.org). And then in a console...
