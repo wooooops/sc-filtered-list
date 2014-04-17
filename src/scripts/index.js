@@ -319,6 +319,7 @@ emitter( FilteredList.prototype );
 
 exports = module.exports = FilteredList;
 exports.defaults = config.defaults;
+exports.templates = config.templates;
 
 $( function () {
   $( "button[data-" + config.className + "]" ).each( function ( _i, _el ) {
