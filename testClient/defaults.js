@@ -1,5 +1,3 @@
-var FilteredList = scfilteredlist;
-
 FilteredList.defaults.buttonLabel = "__buttonLabel";
 FilteredList.defaults.listTitle = "__listTitle";
 FilteredList.defaults.maxNumItemsVisible = 3;

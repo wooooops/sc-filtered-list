@@ -1,5 +1,3 @@
-var FilteredList = scfilteredlist;
-
 describe( "more than one", function () {
 
   var $filter1,

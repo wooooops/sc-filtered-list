@@ -12,7 +12,7 @@ var gulp = require( "gulp" ),
 
 var pkg = require( "./package.json" ),
   livereloadServer,
-  moduleName = pkg.name.replace( /-(\w)/g, "$1" );
+  moduleName = pkg.moduleName;
 
 var livereload = function ( _file ) {
   return function () {

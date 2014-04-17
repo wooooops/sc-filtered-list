@@ -1,7 +1,5 @@
 describe( "fuzzy search", function () {
 
-  var Filter = scfilteredlist;
-
   it( "should filter the list using fuzzy matching", function ( _done ) {
 
     this.slow( 5000 );
@@ -9,7 +7,7 @@ describe( "fuzzy search", function () {
     var $filter = $( "button[data-sc-filtered-list]" ),
       filter;
 
-    filter = new Filter( $filter, {
+    filter = new FilteredList( $filter, {
       fuzzy: true
     } );
 
@@ -57,7 +55,7 @@ describe( "fuzzy search", function () {
     var $filter = $( "button[data-sc-filtered-list]" ),
       filter;
 
-    filter = new Filter( $filter, {
+    filter = new FilteredList( $filter, {
       fuzzy: false
     } );
 

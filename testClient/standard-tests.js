@@ -1,5 +1,3 @@
-var FilteredList = scfilteredlist;
-
 var itemLabelsShouldBe = function ( _filter ) {
   var args = Array.prototype.slice.call( arguments ).splice( 1 );
 

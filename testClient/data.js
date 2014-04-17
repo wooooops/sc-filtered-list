@@ -1,5 +1,3 @@
-var FilteredList = scfilteredlist;
-
 describe( "data", function () {
 
   it( "should add a bunch of items in one go", function ( _done ) {

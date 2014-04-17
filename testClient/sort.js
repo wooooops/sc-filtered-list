@@ -1,7 +1,5 @@
 describe( "sort", function () {
 
-  var Filter = scfilteredlist;
-
   it( "should sort the list", function ( _done ) {
 
     this.slow( 5000 );
@@ -51,7 +49,7 @@ describe( "sort", function () {
 
     $filter.attr( "data-sc-filtered-list-options", "{\"sort\": \"asc\"}" );
 
-    filter = window.filter = new Filter( $filter );
+    filter = window.filter = new FilteredList( $filter );
 
     filter.items.push( {
       name: "leonie"

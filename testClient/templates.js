@@ -1,5 +1,3 @@
-var FilteredList = scfilteredlist;
-
 FilteredList.templates.listWrapper = "<div data-template-test='listWrapper' class='{{config.className}}-container'>{{!config.templates.listInput}}{{!config.templates.listHeader}}{{!config.templates.listItemWrapper}}</div>";
 FilteredList.templates.listInput = "<div data-template-test='listInput' class='{{config.className}}-input-container'><input type='text' class='{{config.className}}-input form-control'></div>";
 FilteredList.templates.listHeader = "<header data-template-test='listHeader' class='{{config.className}}-header panel-heading'>{{!config.defaults.listTitle}}{{!config.templates.listSortToggle}}</header>";
