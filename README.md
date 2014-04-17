@@ -1,4 +1,5 @@
   - [FilteredList()](#filteredlist)
+  - [Installation](#installation)
   - [Overview](#overview)
   - [Instantiate](#instantiate)
   - [Options](#options)
@@ -15,6 +16,14 @@
 
   `sc-filtered-list` is a UI control to allow the user to quickly choose a
   single object from a list of many objects.
+  
+# Installation
+  
+  Get [Node.js](http://nodejs.org). And then in a console...
+  
+  ```bash
+  npm install
+  ```
   
 # Overview
   
