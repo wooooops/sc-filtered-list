@@ -1,9 +1,11 @@
 var gulp = require( "gulp" ),
   browserify = require( "gulp-browserify" ),
   css = require( "gulp-minify-css" ),
+  concat = require( "gulp-concat" ),
   jshint = require( "gulp-jshint" ),
   jshintReporter = require( "jshint-stylish" ),
   less = require( "gulp-less" ),
+  mochaPhantomJS = require( "gulp-mocha-phantomjs" ),
   rename = require( "gulp-rename" ),
   shell = require( "gulp-shell" ),
   uglify = require( "gulp-uglify" );
@@ -13,10 +15,16 @@ var pkg = require( "./package.json" ),
   moduleName = pkg.name.replace( /-(\w)/g, "$1" );
 
 var livereload = function ( _file ) {
-  return function ( _path ) {
+  return function () {
     if ( livereloadServer ) livereloadServer.changed( _file );
   }
 }
+
+gulp.task( "concatScripts", function () {
+  return gulp.src( [ "./src/scripts/index.js", "./src/scripts/list.js" ] )
+    .pipe( concat( "src.js" ) )
+    .pipe( gulp.dest( "./.tmp/" ) );
+} );
 
 gulp.task( "jshint", function () {
   return gulp.src( [ "./src/scripts/**/*.js", "test/**/*.js", "testClient/**/*.js" ] )
@@ -40,6 +48,14 @@ gulp.task( "minifyStyles", [ "stylesMain" ], function () {
     .on( "end", livereload( ".js" ) );
 } );
 
+gulp.task( "readme", [ "concatScripts" ], function () {
+  gulp.src( "" )
+    .pipe( shell( [
+      "./node_modules/.bin/dox < ./.tmp/src.js -a > README.md"
+    ] ) )
+    .on( "end", livereload( ".js" ) );
+} );
+
 gulp.task( "scriptMain", function () {
   return gulp.src( [ "./src/scripts/index.js" ] )
     .pipe( browserify( {
@@ -59,19 +75,30 @@ gulp.task( "stylesMain", function () {
     .on( "end", livereload( ".css" ) );
 } );
 
-gulp.task( "test", [ "scriptMain", "stylesMain" ], function () {
+gulp.task( "test", function () {
   return gulp.src( "" ).pipe( shell( [
     "npm test"
-  ], {
-    ignoreErrors: true
-  } ) )
-    .on( "end", livereload( ".js" ) );
+  ] ) );
+} );
+
+gulp.task( "tests", [ "scriptMain", "stylesMain" ], function () {
+  return gulp.src( [
+    "testClient/data.html",
+    "testClient/defaults.html",
+    "testClient/destroy.html",
+    "testClient/fuzzy-search.html",
+    "testClient/more-than-one.html",
+    "testClient/open-close.html",
+    "testClient/options-given-by-data-attrs.html",
+    "testClient/sort.html",
+    "testClient/templates.html"
+  ] ).pipe( mochaPhantomJS() );
 } );
 
 gulp.task( "watch", function () {
   livereloadServer = require( "gulp-livereload" )();
 
-  gulp.watch( [ "./src/scripts/**/*.js*" ], [ "scripts", "minifyScripts" ] );
+  gulp.watch( [ "./src/scripts/**/*.js*" ], [ "scripts", "minifyScripts", "test", "docs" ] );
   gulp.watch( [ "./src/styles/**/*.less" ], [ "styles" ] );
   gulp.watch( [ "./demo/*" ], [ "default" ] );
   gulp.watch( [ "./test/**/*", "./testClient/**/*" ], [ "test" ] );
@@ -79,8 +106,9 @@ gulp.task( "watch", function () {
 } );
 
 gulp.task( "default", [ "build", "test" ] );
-gulp.task( "build", [ "scripts", "styles", "minify" ] );
+gulp.task( "build", [ "scripts", "styles", "minify", "docs" ] );
 gulp.task( "scripts", [ "scriptMain" ] );
 gulp.task( "styles", [ "stylesMain" ] );
 gulp.task( "minify", [ "minifyScripts", "minifyStyles" ] );
-gulp.task( "run", [ "build", "watch" ] );
+gulp.task( "docs", [ "readme" ] );
+gulp.task( "run", [ "build", "test", "watch" ] );

@@ -1,19 +1,16 @@
 {
   "name": "sc-filtered-list",
   "version": "0.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A UI control to allow the user to quickly choose a single object from a list of many objects",
+  "main": "src/scripts/index.js",
   "scripts": {
     "postinstall": "bower install --config.interactive=false && gulp",
-    "test": "mocha && npm run pjs1 && npm run pjs2 && npm run pjs3 && npm run pjs4 && npm run pjs5 && npm run pjs6 && npm run pjs7",
-    "pjs1": "mocha-phantomjs -p ./node_modules/.bin/phantomjs testClient/open-close.html",
-    "pjs2": "mocha-phantomjs -p ./node_modules/.bin/phantomjs testClient/options-given-by-data-attrs.html",
-    "pjs3": "mocha-phantomjs -p ./node_modules/.bin/phantomjs testClient/destroy.html",
-    "pjs4": "mocha-phantomjs -p ./node_modules/.bin/phantomjs testClient/defaults.html",
-    "pjs5": "mocha-phantomjs -p ./node_modules/.bin/phantomjs testClient/more-than-one.html",
-    "pjs6": "mocha-phantomjs -p ./node_modules/.bin/phantomjs testClient/sort.html",
-    "pjs7": "mocha-phantomjs -p ./node_modules/.bin/phantomjs testClient/fuzzy-search.html",
-    "posttest": "mocha test/readme.js -R markdown > README.md"
+    "test": "gulp tests",
+    "posttest": "gulp docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SPEAKUI/sc-filtered-list"
   },
   "author": "David Tsuji",
   "license": "MIT",
