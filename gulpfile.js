@@ -82,7 +82,7 @@ gulp.task( "test", function () {
 } );
 
 gulp.task( "tests", [ "scriptMain", "stylesMain" ], function () {
-  return gulp.src( [
+  [
     "testClient/data.html",
     "testClient/defaults.html",
     "testClient/destroy.html",
@@ -92,7 +92,9 @@ gulp.task( "tests", [ "scriptMain", "stylesMain" ], function () {
     "testClient/options-given-by-data-attrs.html",
     "testClient/sort.html",
     "testClient/templates.html"
-  ] ).pipe( mochaPhantomJS() );
+  ].forEach( function ( _html ) {
+    gulp.src( _html ).pipe( mochaPhantomJS() );
+  } );
 } );
 
 gulp.task( "watch", function () {
