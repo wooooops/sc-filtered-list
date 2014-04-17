@@ -30,7 +30,8 @@
     "gulp-shell": "^0.2.4",
     "gulp-uglify": "^0.2.1",
     "jshint-stylish": "^0.1.5",
-    "should": "~2.1.1"
+    "should": "~2.1.1",
+    "mocha": "^1.18.2"
   },
   "dependencies": {
     "debounce": "0.0.3",
