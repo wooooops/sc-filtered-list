@@ -8,6 +8,7 @@
   - [Templates](#templates)
   - [FilteredList.data()](#filteredlistdata)
   - [Add a single object/item](#addasingleobjectitem)
+  - [Get the value](#getthevalue)
   - [FilteredList.destroy()](#filteredlistdestroy)
 
 ## FilteredList()
@@ -36,6 +37,13 @@
 ```
 
   
+  To get a reference to the instantiated object use the jQuery `data` method:
+  
+```js
+$('#myButton').data('scfilteredlist');
+```
+
+  
   **Instantiate using code**
   
 ```js
@@ -52,6 +60,8 @@ var filter = new FilteredList(document.querySelector('#myButton'));
 ```
 
   
+  > The options object must be a properly formatted JSON string.
+  
   Give options using code.
   
 ```js
@@ -61,15 +71,15 @@ var filter = new FilteredList(document.querySelector('#myButton'), {
 ```
 
   
-  - buttonLabel: The button label (default: "Choose one")
-  - fuzzy: The search type. If true "dvd" will match "david" (default: false)
-  - itemLabelKey: The object key to use for the items label (default: "name")
-  - listTitle: The title above the list (default: "Select an item")
-  - maxNumItems: The maximum number of items in the list (default: 10)
-  - maxNumItemsVisible: The maximum number of items visible (default: 7)
-  - minWidth: The width of the list (default: 300)
-  - sort: The default sort ["", "asc", "desc"] (default: "desc")
-  - sortControlVisible: If the sort control is visible (default: true)
+  - `buttonLabel` The button label (default: "Choose one")
+  - `fuzzy` The search type. If true "dvd" will match "david" (default: false)
+  - `itemLabelKey` The object key to use for the items label (default: "name")
+  - `listTitle` The title above the list (default: "Select an item")
+  - `maxNumItems` The maximum number of items in the list (default: 10)
+  - `maxNumItemsVisible` The maximum number of items visible (default: 7)
+  - `minWidth` The width of the list (default: 300)
+  - `sort` The default sort ["", "asc", "desc"] (default: "desc")
+  - `sortControlVisible` If the sort control is visible (default: true)
   
 ## Defaults
   
@@ -92,15 +102,15 @@ myList.on('change', function(){});
   
   **Events**
   
-  - change: When the user selects and item and the value has changed
-  - close: When the list closes
-  - destroy: When the `FilteredList` is destroyed
-  - filtered: When the search value changes
-  - itemFocus: When an item in the list gains focus
-  - open: When the list opens
-  - sort: When the list is sorted
-  - redraw: When the list redraws itself
-  - fetch: When the list tries to fetch data based on the search term
+  - `change` When the user selects and item and the value has changed
+  - `close` When the list closes
+  - `destroy` When the `FilteredList` is destroyed
+  - `filtered` When the search value changes
+  - `itemFocus` When an item in the list gains focus
+  - `open` When the list opens
+  - `sort` When the list is sorted
+  - `redraw` When the list redraws itself
+  - `fetch` When the list tries to fetch data based on the search term
   
 ## Styling
   
@@ -177,6 +187,15 @@ myList.items.push({
 });
 ```
 
+  
+# Get the value
+  
+  To get the value of the selected object/item use the `value` property.
+  
+```js
+myList.value;
+```
+
 ## FilteredList.destroy()
 
   Destroys the `FilteredList` and invalidates the object.
@@ -185,3 +204,6 @@ myList.items.push({
 myList.destroy();
 ```
 
+  
+  > Any further calles to methods like `destroy` or `data` etc will return
+  nothing.

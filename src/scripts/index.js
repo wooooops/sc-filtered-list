@@ -28,6 +28,10 @@ var config = require( "./config.json" ),
  *
  *   <button data-sc-filtered-list>
  *
+ * To get a reference to the instantiated object use the jQuery `data` method:
+ *
+ *   $('#myButton').data('scfilteredlist');
+ *
  * **Instantiate using code**
  *
  *   var filter = new FilteredList(document.querySelector('#myButton'));
@@ -38,21 +42,23 @@ var config = require( "./config.json" ),
  *
  *   <button data-sc-filtered-list data-sc-filtered-list-options='{"fuzzy": true}'>
  *
+ * > The options object must be a properly formatted JSON string.
+ *
  * Give options using code.
  *
  *   var filter = new FilteredList(document.querySelector('#myButton'), {
  *     fuzzy: true
  *   });
  *
- * - buttonLabel: The button label (default: "Choose one")
- * - fuzzy: The search type. If true "dvd" will match "david" (default: false)
- * - itemLabelKey: The object key to use for the items label (default: "name")
- * - listTitle: The title above the list (default: "Select an item")
- * - maxNumItems: The maximum number of items in the list (default: 10)
- * - maxNumItemsVisible: The maximum number of items visible (default: 7)
- * - minWidth: The width of the list (default: 300)
- * - sort: The default sort ["", "asc", "desc"] (default: "desc")
- * - sortControlVisible: If the sort control is visible (default: true)
+ * - `buttonLabel` The button label (default: "Choose one")
+ * - `fuzzy` The search type. If true "dvd" will match "david" (default: false)
+ * - `itemLabelKey` The object key to use for the items label (default: "name")
+ * - `listTitle` The title above the list (default: "Select an item")
+ * - `maxNumItems` The maximum number of items in the list (default: 10)
+ * - `maxNumItemsVisible` The maximum number of items visible (default: 7)
+ * - `minWidth` The width of the list (default: 300)
+ * - `sort` The default sort ["", "asc", "desc"] (default: "desc")
+ * - `sortControlVisible` If the sort control is visible (default: true)
  *
  * ### Defaults
  *
@@ -69,15 +75,15 @@ var config = require( "./config.json" ),
  *
  * **Events**
  *
- * - change: When the user selects and item and the value has changed
- * - close: When the list closes
- * - destroy: When the `FilteredList` is destroyed
- * - filtered: When the search value changes
- * - itemFocus: When an item in the list gains focus
- * - open: When the list opens
- * - sort: When the list is sorted
- * - redraw: When the list redraws itself
- * - fetch: When the list tries to fetch data based on the search term
+ * - `change` When the user selects and item and the value has changed
+ * - `close` When the list closes
+ * - `destroy` When the `FilteredList` is destroyed
+ * - `filtered` When the search value changes
+ * - `itemFocus` When an item in the list gains focus
+ * - `open` When the list opens
+ * - `sort` When the list is sorted
+ * - `redraw` When the list redraws itself
+ * - `fetch` When the list tries to fetch data based on the search term
  *
  * ### Styling
  *
@@ -259,6 +265,12 @@ var FilteredList = function ( _el, _defaults ) {
  *     name: "david"
  *   });
  *
+ * ## Get the value
+ *
+ * To get the value of the selected object/item use the `value` property.
+ *
+ *   myList.value;
+ *
  */
 FilteredList.prototype.data = function ( _arrayOfItems ) {
   var self = this;
@@ -281,6 +293,8 @@ FilteredList.prototype.data = function ( _arrayOfItems ) {
  *
  *   myList.destroy();
  *
+ * > Any further calles to methods like `destroy` or `data` etc will return
+ * nothing.
  */
 FilteredList.prototype.destroy = function () {
   var self = this;
