@@ -2,3 +2,5 @@
 .tmp/
 .git*
 test/
+bower_components/
+testClient/
