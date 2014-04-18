@@ -1,7 +1,7 @@
 {
   "name": "sc-filtered-list",
   "moduleName": "FilteredList",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A UI control to allow the user to quickly choose a single object from a list of many objects",
   "main": "src/scripts/index.js",
   "scripts": {
