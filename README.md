@@ -88,7 +88,7 @@ var filter = new FilteredList(document.querySelector('#myButton'), {
   - `listTitle` The title above the list (default: "Select an item")
   - `maxNumItems` The maximum number of items in the list (default: 10)
   - `maxNumItemsVisible` The maximum number of items visible (default: 7)
-  - `minWidth` The width of the list (default: 300)
+  - `width` The width of the list (default: 300)
   - `sort` The default sort ["", "asc", "desc"] (default: "desc")
   - `sortControlVisible` If the sort control is visible (default: true)
   
@@ -216,5 +216,5 @@ myList.destroy();
 ```
 
   
-  > Any further calles to methods like `destroy` or `data` etc will return
+  > Any further calls to methods like `destroy` or `data` etc will return
   nothing.

@@ -33,4 +33,36 @@ describe( "standard tests", function () {
     } );
   } );
 
+  it( "each filter should have the right width", function ( _done ) {
+
+    this.slow( 5000 );
+
+    var q = async.queue( function ( _filter, _callback ) {
+      var filter = _filter;
+
+      filter.list.open();
+
+      setTimeout( function () {
+        var widthIsRight = Math.abs( filter.list.$el.outerWidth() - filter.__config.defaults.width ) < 3;
+        widthIsRight.should.be.true;
+        filter.list.close();
+
+        setTimeout( function () {
+          _callback();
+        }, 100 );
+
+      }, 100 );
+
+    }, 3 );
+
+    q.drain = function () {
+      _done();
+    }
+
+    $( "[data-sc-filtered-list]" ).each( function ( _i, _el ) {
+      q.push( $( _el ).data( "scfilteredlist" ) );
+    } );
+
+  } );
+
 } );

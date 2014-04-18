@@ -8,7 +8,7 @@
     "listTitle": "Select an item",
     "maxNumItems": 10,
     "maxNumItemsVisible": 7,
-    "minWidth": 300,
+    "width": 300,
     "sort": "desc",
     "sortControlVisible": true
   },

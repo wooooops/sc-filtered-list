@@ -49,7 +49,7 @@ var List = function ( _filter ) {
     } )
   } ) );
 
-  self.$el.width( config.defaults.minWidth );
+  self.$el.width( config.defaults.width );
 
   self.$input = self.$el.find( "." + config.className + "-input" );
   self.$header = self.$el.find( "." + config.className + "-header" );
@@ -168,7 +168,6 @@ List.prototype.redraw = debounce( function () {
       }
     } );
   }
-
 
   if ( self.filter.__sort ) {
     results.sort( function ( a, b ) {
